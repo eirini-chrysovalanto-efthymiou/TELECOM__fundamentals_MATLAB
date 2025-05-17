@@ -11,7 +11,7 @@ noiseMatrix = randn(10, 10);  % Each value ~ N(0,1)
 noiseVector = noiseMatrix(:);
 % This operation stacks all matrix elements column-wise into a single vector.
 
-% ⚠️ Important:
+%  Important:
 % Do not use noiseMatrix(100,1) — it will cause an error.
 % The matrix has only 10 rows and 10 columns.
 

@@ -140,3 +140,52 @@ disp(concat_vector)
 % So, A(1:5) = [1; 4; 2; 5; 3]  --> This is NOT the first row!
 %
 %  Correct way to access the first row: A(1, :)
+
+
+
+
+%-------------Exercise_3--------------------------%
+
+# Solve the following system of linear equations for the unknowns x, y, z, w
+    x  + 2y  -  z + 3w = 8
+   2x  + 3y  +  z + 5w = 12
+    x  +  y  + 4z +  w = 9
+  -3x  -  y  + 2z -  w = 3
+
+%------------------%
+
+% Coefficient matrix
+A = [ 1  2 -1  3;
+      2  3  1  5;
+      1  1  4  1;
+     -3 -1  2 -1];
+
+% Right-hand side vector
+B = [8; 12; 9; 3];
+
+% Solve the system A * X = B
+X = A \ B;
+
+% Display the results
+disp('Solutions:')
+fprintf('x = %.4f\n', X(1))
+fprintf('y = %.4f\n', X(2))
+fprintf('z = %.4f\n', X(3))
+fprintf('w = %.4f\n', X(4))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -88,6 +88,22 @@ A(3, :) = 0;    % The colon `:` means "all columns", and `= 0` sets all elements
                % Zero is simply treated as a new value replacing the existing elements.
 
 
+# When you select using vectors, the result has dimensions length(rows) × length(columns). If you don’t understand this correctly, you might get confused by the shape of the result.
+
+# What this means in practice:
+
+# When in MATLAB you select elements of a matrix using index vectors for rows and columns, the size (dimensions) of the result is not just a subset of the original matrix, but:
+
+# The number of rows in the result is equal to the length of the vector you provided for the rows.
+
+# The number of columns in the result is equal to the length of the vector you provided for the columns.
+
+
+
+
+
+
+
 % ----------------------- Modifying Matrix Values -----------------------
 
 x(1:end, 1) = 44;

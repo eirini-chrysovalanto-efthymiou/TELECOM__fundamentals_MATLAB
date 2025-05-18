@@ -83,10 +83,181 @@ x(1:end, 2);         % same as x(:, 2)
 x(:, 2);
 
 x(1, :);             % entire first row
+A(3, :) = 0;    % The colon `:` means "all columns", and `= 0` sets all elements in row 3 to zero.
+               % This does not reduce the size of the matrix, since the space for those elements was already allocated.
+               % Zero is simply treated as a new value replacing the existing elements.
+
 
 % ----------------------- Modifying Matrix Values -----------------------
 
 x(1:end, 1) = 44;
 
-% ----------------------- Combining Matrices -----------------------
-% (this section was left blank, can be extended if needed)
+%-------------------------Combining Matrices----------------------------%
+
+A = [(1:2:5)', (2:2:6)'];
+% A =
+%    1   2
+%    3   4
+%    5   6
+
+B = [(9:-2:5)', (8:-2:4)'];
+% B =
+%    9   8
+%    7   6
+%    5   4
+
+C = [1 2 9 8;
+     3 4 7 6;
+     5 6 5 4;
+     9 8 1 2;
+     7 6 3 4;
+     5 4 5 6];
+
+%---------------- What does "combining matrices" mean? -----------------%
+% Observe how matrices A and B are combined to form C:
+% C =
+%   A[1 2]   B[9 8]
+%   A[3 4]   B[7 6]
+%   A[5 6]   B[5 4]
+%   B[9 8]   A[1 2]
+%   B[7 6]   A[3 4]
+%   B[5 4]   A[5 6]
+
+% Vertical concatenation
+C1 = [A; B];
+% C1 =
+%    1   2
+%    3   4
+%    5   6
+%    9   8
+%    7   6
+%    5   4
+
+B1 = [1; 1];
+B2 = [2 2; 2 2];
+
+% This gives an error due to incompatible vertical dimensions
+% C2 = [B1; B2];   % ERROR: 2x1 vs 2x2
+
+% Horizontal concatenation works here
+C2 = [B1 B2];
+% C2 =
+%    1   2   2
+%    1   2   2
+
+C3 = [B1 B2 B1];
+% C3 =
+%    1   2   2   1
+%    1   2   2   1
+
+%-------------------------Matrix Transpose-----------------------------%
+V = [2 3 4];
+H = V';  % Transposing a row vector to a column vector
+
+% Example: Observe how the element at row 1, column 2 becomes
+% the element at row 2, column 1 after the transpose.
+V(1,2);   % Output: 3
+H(2,1);   % Output: 3
+
+1:5        % This creates a row vector: [1 2 3 4 5]
+
+1:5'       % This does NOT create a column vector!
+           % Why? Because it's interpreted as: 1 to (5'), i.e., the transpose of 5.
+           % Since 5 is a scalar (a 1x1 matrix), transposing it does nothing.
+           % Therefore, this still results in the row vector [1 2 3 4 5].
+
+(1:5)'     % This correctly creates a column vector:
+           %    1
+           %    2
+           %    3
+           %    4
+           %    5
+
+% Summary:
+% - In MATLAB, the transpose operator (') has lower precedence than the colon operator.
+% - So writing 1:5' is the same as 1:(5'), which is just 1:5.
+% - To transpose the full vector, use parentheses: (1:5)'
+
+%-------------------------Arithmetic Operations------------------------%
+
+% A, B
+A, B  % Displays both matrices one after the other
+
+% Matrix addition: both matrices must have the same dimensions
+A + B;
+% Result:
+%   10  10
+%   10  10
+%   10  10
+
+%-------------------- Element-wise Multiplication ---------------------%
+A .* B;
+% Result:
+%     9   16
+%    21   24
+%    25   24
+
+% Check sizes in a row vector
+[size(A), size(B)]
+% Result: 3 2 3 2
+
+% Standard matrix multiplication: requires inner dimensions to match
+A = A';  % Transpose A to make it 2x3
+% Now A * B works:
+% A =
+%    1   3   5
+%    2   4   6
+% A * B =
+%   55   46
+%   76   64
+
+% Rule: For A * B to be valid, the number of columns in A must match
+% the number of rows in B. Outer dimensions determine the result size.
+
+%-------------------- Matrix Division --------------------%
+% X ./ Y or X .\ Y
+% Both matrices must have the same dimensions.
+
+% X ./ Y → each element of X is divided by the corresponding element of Y.
+% X .\ Y → each element of Y is divided by the corresponding element of X (reversed).
+
+% Try them out in the command window to see the effect.
+
+2^3  % Raises 2 to the power of 3 (scalar exponentiation)
+
+%--------- Common Arithmetic Practices - How to Avoid Mistakes --------%
+
+% Example 1: Element-wise power
+C = [1 2; 3 4];
+B = [5 6; 7 8];
+result = C.^B;  % Element-wise power, valid if C and B are same size
+
+result = C.^2;  % Raises each element of C to the power of 2
+
+% Note: This works regardless of whether C is square, because .^ is element-wise
+
+%--- Additional scalar operations with matrices ---
+% 1. C + 3 → adds 3 to every element (scalar broadcasting)
+% 2. 2 * C → multiplies each element by 2
+% 3. 2 ./ C → divides 2 by each element of C
+% 4. C ./ 3 → divides each element of C by 3
+% 5. A \ 2 → ERROR: matrix left division with a scalar is invalid
+% 6. A .^ 2 → raises each element of A to the power of 2
+% 7. 2 .^ A → raises scalar 2 to the power of each element of A
+
+%------------ Summary Table -------------%
+% Expression      | Error? | Type                  | Notes
+%-----------------|--------|-----------------------|-----------------------------
+% C + 3           | No     | Scalar + Matrix       | Scalar broadcasted
+% 2 * C           | No     | Scalar * Matrix       | Element-wise multiplication
+% 2 ./ C          | No     | Scalar ./ Matrix      | Element-wise division
+% C ./ 3          | No     | Matrix ./ Scalar      | Element-wise division
+% A \ 2          | Yes    | Matrix left division  | Not valid with scalar
+% A .^ 2          | No     | Element-wise power    | Valid for any matrix
+% 2 .^ A          | No     | Element-wise power    | Scalar raised to matrix powers
+
+% TODO: Create a PDF summarizing the math behind matrix multiplication and division
+
+
+
+

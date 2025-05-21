@@ -1,0 +1,50 @@
+
+%% Exercise 1: Transform 5x5 Identity Matrix
+% ---------------------------------------------
+% Create a 5×5 identity matrix and transform it as follows:
+%   - Main diagonal elements → 0
+%   - Elements above the main diagonal → 7
+%   - Elements below the main diagonal → -7
+% ---------------------------------------------
+
+% Initialize 5×5 identity matrix
+A = eye(5);
+
+% Loop through matrix entries and apply transformations
+for i = 1:5
+    for j = 1:5
+        if i == j
+            A(i,j) = 0;      % Main diagonal
+        elseif i < j
+            A(i,j) = 7;      % Above main diagonal
+        else
+            A(i,j) = -7;     % Below main diagonal
+        end
+    end
+end
+
+% Display result for Exercise 1
+disp('Exercise 1 Solution:');
+disp(A);
+
+
+%% Exercise 2: Count Random Values in Intervals
+% ---------------------------------------------
+% Create a 100×1 array of random values in [0,1] and
+% count how many fall into the intervals:
+%   (0.75,1], (0.25,0.75], [0,0.25]
+% ---------------------------------------------
+
+% Generate random array
+B = rand(100,1);
+
+% Count values in each interval
+count1 = sum(B > 0.75 & B <= 1);    % (0.75, 1]
+count2 = sum(B > 0.25 & B <= 0.75);  % (0.25, 0.75]
+count3 = sum(B >= 0   & B <= 0.25);  % [0, 0.25]
+
+% Display results for Exercise 2
+fprintf('\nExercise 2 Results:\n');
+fprintf('  (0.75, 1]: %d values\n', count1);
+fprintf('  (0.25, 0.75]: %d values\n', count2);
+fprintf('  [0, 0.25]: %d values\n', count3);

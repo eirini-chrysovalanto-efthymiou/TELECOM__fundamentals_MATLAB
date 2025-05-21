@@ -10,7 +10,7 @@ function out = functionName(inputs)
     % Perform calculations
     out = ...; % the value to return
 end
-
+# You can have a many arguments you want 
 %---------------------------------%
 % CALLING A FUNCTION
 %---------------------------------%

@@ -39,9 +39,9 @@ disp(A);
 B = rand(100,1);
 
 % Count values in each interval
-count1 = sum(B > 0.75 & B <= 1);    % (0.75, 1]
-count2 = sum(B > 0.25 & B <= 0.75);  % (0.25, 0.75]
-count3 = sum(B >= 0   & B <= 0.25);  % [0, 0.25]
+count1 = sum(B > 0.75 || B <= 1);    % (0.75, 1]
+count2 = sum(B > 0.25 || B <= 0.75);  % (0.25, 0.75]
+count3 = sum(B >= 0   || B <= 0.25);  % [0, 0.25]
 
 % Display results for Exercise 2
 fprintf('\nExercise 2 Results:\n');
